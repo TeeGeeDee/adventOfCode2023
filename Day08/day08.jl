@@ -2,7 +2,7 @@ function day08(file)
     textblock = Iterators.takewhile(!isempty,eachline(file));
     directions = Iterators.cycle(only(textblock));
     network = Dict(begin
-                    (s,l,r) = match(r"([A-Z0-9]+) = \(([A-Z0-9]+), ([A-Z0-9]+)\)",line);
+                    (s,l,r) = match(r"([A-Z]+) = \(([A-Z]+), ([A-Z]+)\)",line);
                     String(s)=>String.([l,r])
                 end
                 for line in textblock);

@@ -1,9 +1,12 @@
 function day04(file)
-    splitcards_string = [match(r"Card *\d+: (.*) \| (.*)",line).captures for line in eachline(file)];
-    splitcards = [[parse.(Int,split(cardside)) for cardside in card] for card in splitcards_string];
-    numwinners = [length(reduce(intersect,card)) for card in splitcards];
+    numwinners = [begin
+        splitcard = match(r"Card *\d+: (.*) \| (.*)",line).captures;
+        winnings,haves = [parse.(Int,split(cardside)) for cardside in splitcard];
+        wins = length(intersect(winnings,haves));
+        end
+        for line in eachline(file)];
     # For part 2, count starting from final card how many cards each card is worth, given the number of winners
-    ncards = length(splitcards);
+    ncards = length(numwinners);
     num_cards_produced = ones(ncards); # in any case each card counts as one card
     for i in ncards:-1:1
         for j = 1:numwinners[i]
